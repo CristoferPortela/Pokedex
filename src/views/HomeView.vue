@@ -1,41 +1,42 @@
 <template>
-  <ui-form>
-    <div class="home">
-      <div class="flex-column">
-        <ui-spinner
-          active
-          v-if="loading"
-          size="L"
-          class="super-large"
-        ></ui-spinner>
-        <img
-          :class="`pikachu-centered ${loading ? '' : 'margin-top'}`"
-          alt="Pikachu logo"
-          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
-        />
-      </div>
-      <form class="choose-poke">
+  <main>
+    <ui-form>
+      <div class="home">
         <div class="flex-column">
-          <label for="poke-name">Escolha seu pokemon</label>
-          <input
-            placeholder="Qual pokemon você gostaria de ver agora?"
-            id="poke-name"
-            type="text"
-            name="poke-name"
-            @keyup="getPokeList"
+          <ui-spinner
+            active
+            v-if="loading"
+            size="L"
+            class="super-large"
+          ></ui-spinner>
+          <img
+            :class="`pikachu-centered ${loading ? '' : 'margin-top'}`"
+            alt="Pikachu logo"
+            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
           />
-          <ui-button v-if="pokeName" raised>
-            {{ pokeName }} eu escolho você!!!
-          </ui-button>
         </div>
-      </form>
-    </div>
-  </ui-form>
+        <form class="choose-poke" @submit="goTo">
+          <div class="flex-column">
+            <label for="poke-name">Escolha seu pokemon</label>
+            <input
+              placeholder="Qual pokemon você gostaria de ver agora?"
+              id="poke-name"
+              type="text"
+              name="poke-name"
+              @keyup="getPokeList"
+            />
+            <ui-button @click="goTo" v-if="pokeName" raised>
+              {{ pokeName }} eu escolho você!!!
+            </ui-button>
+          </div>
+        </form>
+      </div>
+    </ui-form>
+  </main>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import { AxiosRequestConfig } from 'axios';
 import { PokemonData } from '@/poke-url/pokemon-url';
 
@@ -51,9 +52,7 @@ type InputEvent = Event & {
       pokeName: '',
     };
   },
-  components: {
-    HelloWorld,
-  },
+  components: {},
   methods: {
     getPokeList: function (event: InputEvent) {
       const pokeName = event.target.value;
@@ -66,7 +65,6 @@ type InputEvent = Event & {
           })
           .catch(() => {
             this.error = true;
-            console.log('oii');
           })
           .finally(() => {
             setTimeout(() => {
@@ -74,6 +72,14 @@ type InputEvent = Event & {
               this.loading = false;
             }, 700);
           });
+      }
+    },
+    goTo: function (event: FormDataEvent | null = null) {
+      if (event !== null) {
+        event.preventDefault();
+      }
+      if (this.pokeName) {
+        this.$router.push(`/pokemon/${this.pokeName}`);
       }
     },
   },

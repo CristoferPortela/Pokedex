@@ -1,0 +1,148 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+$width: 380px;
+$height: 480px;
+
+.pd-device-borders  {
+  border: 1px solid rgba(black, 0.8);
+  width: $width;
+  height: $height;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px 1px rgba(black, 0.4);
+  background-color: v.$pokedex;
+
+  .screen-borders {
+    background-color: rgb(171,142,100);
+    border: .7px solid black;
+    border-radius: 5px 5px 5px 15px;
+    margin: 25px auto;
+    width: #{$width - 100};
+    height: #{($height/2.5) + 40};
+
+    .leds-top {
+      @include m.flex-centered;
+      height: 25px;
+      gap: 15px;
+
+      span {
+        @include m.led-button(7px);
+      }
+    }
+    .screen {
+      @include m.flex-centered;
+      background-color: v.$screen-color;
+      width: #{$width - 150};
+      height: #{($height/2.5) - 10};
+      margin: auto;
+      border-radius: 5px;
+      img {
+        width: 150px;
+      }
+    }
+
+    .screen-bottom {
+      @include m.flex-space-between;
+      width: #{$width - 150};
+      margin: 5px 25px;
+
+      span:first-child {
+        @include m.led-button(13px);
+      }
+      svg {
+
+      }
+    }
+  }
+  .pd-footer {
+    @include m.flex-space-between;
+    width: #{$width - 100};
+    margin: 25px auto;
+    .big-button {
+      flex: 1;
+      margin-top: 10px;
+      span {
+        @include m.led-button(30px, v.$screen-color);
+      }
+    }
+    .flat-led-and-green-area {
+      @include m.flex-column;
+      flex: 2.5;
+      .flat-led {
+        @include m.flex-space-between;
+        span {
+          display: block;
+          width: 50px;
+          height: 5px;
+          border: 1px solid black;
+          background-color: red;
+          border-radius: 5px;
+
+          &:last-child {
+            background-color: blue;
+          }
+        }
+      }
+      .green-area {
+        margin: 25px 5px;
+        width: auto;
+        height: 75px;
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: v.$green;
+      }
+    }
+    .direction-buttons {
+      @include m.flex-column-centered;
+      flex: 2;
+      button {
+        background-color: v.$screen-color;
+        width: 30px;
+        height: 35px;
+        margin: 0;
+        cursor: pointer;
+        transition: ease .2s;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+      & > button {
+        &:first-child {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          border-bottom: none;
+        }
+        &:last-child {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+          border-top: none;
+        }
+      }
+      .horizontal {
+        @include m.flex;
+        margin: 0;
+        padding: 0;
+        button {
+          flex: 1;
+          width: 35px;
+          height: 30px;
+          &:first-child {
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+            border-right: none;
+          }
+          &:last-child {
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+            border-left: none;
+          }
+        }
+        .central-square {
+          background-color: v.$screen-color;
+          width: 28px;
+          height: 30px;
+        }
+      }
+    }
+  }
+}

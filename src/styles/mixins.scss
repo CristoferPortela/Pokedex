@@ -1,0 +1,37 @@
+@use 'variables' as v;
+
+@mixin flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@mixin flex-column {
+  @include flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-centered {
+  @include flex-column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-centered {
+  @include flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-space-between {
+  @include flex;
+  justify-content: space-between;
+}
+
+@mixin led-button($diameter: 10px, $color: v.$led-color) {
+  display: block;
+  width: $diameter;
+  height: $diameter;
+  background-color: $color;
+  border: 1px solid black;
+  border-radius: 50%;
+}

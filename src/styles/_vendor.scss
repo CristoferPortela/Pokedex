@@ -1,5 +1,24 @@
-@use '@material/theme' as theme-variables with (
-  $primary: #134574,
-  $secondary: #fdd100);
+@use 'variables' as v;
+@use '@material/theme' with (
+  $primary: v.$primary,
+  $secondary: v.$secondary
+ );
 
+@use '@material/circular-progress' with(
+  $color: v.$secondary
+);
+
+@use 'balm-ui/components/spinner/spinner';
 @use 'balm-ui/components/button/button';
+
+:root {
+  --primary: #{v.$primary};
+  --secondary: #{v.$secondary};
+}
+
+body {
+  background: v.$primary;
+}
+input {
+  border: none;
+}

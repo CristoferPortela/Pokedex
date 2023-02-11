@@ -1,37 +1,35 @@
 <template>
   <main>
-    <ui-form>
-      <div class="home">
-        <div class="flex-column">
-          <ui-spinner
-            active
-            v-if="loading"
-            size="L"
-            class="super-large"
-          ></ui-spinner>
-          <img
-            :class="`pikachu-centered ${loading ? '' : 'margin-top'}`"
-            alt="Pikachu logo"
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
-          />
-        </div>
-        <form class="choose-poke" @submit="goTo">
-          <div class="flex-column">
-            <label for="poke-name">Escolha seu pokemon</label>
-            <input
-              placeholder="Qual pokemon você gostaria de ver agora?"
-              id="poke-name"
-              type="text"
-              name="poke-name"
-              @keyup="getPokeList"
-            />
-            <ui-button @click="goTo" v-if="pokeName" raised>
-              {{ pokeName }} eu escolho você!!!
-            </ui-button>
-          </div>
-        </form>
+    <div class="home">
+      <div class="flex-column">
+        <ui-spinner
+          active
+          v-if="loading"
+          size="L"
+          class="super-large"
+        ></ui-spinner>
+        <img
+          :class="`pikachu-centered ${loading ? '' : 'margin-top'}`"
+          alt="Pikachu logo"
+          src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg"
+        />
       </div>
-    </ui-form>
+      <form class="choose-poke" @submit="goTo">
+        <div class="flex-column">
+          <label for="poke-name">Escolha seu pokemon</label>
+          <input
+            placeholder="Qual pokemon você gostaria de ver agora?"
+            id="poke-name"
+            type="text"
+            name="poke-name"
+            @keyup="getPokeList"
+          />
+          <ui-button @click="goTo" v-if="pokeName" raised>
+            {{ pokeName }} eu escolho você!!!
+          </ui-button>
+        </div>
+      </form>
+    </div>
   </main>
 </template>
 
@@ -55,7 +53,7 @@ type InputEvent = Event & {
   components: {},
   methods: {
     getPokeList: function (event: InputEvent) {
-      const pokeName = event.target.value;
+      const pokeName = event.target.value?.toLowerCase();
       if (pokeName.length >= 3) {
         this.loading = true;
         this.$http
@@ -113,10 +111,14 @@ export default class HomeView extends Vue {}
 }
 
 .choose-poke {
-  margin: 80px 40px 40px 40px;
+  margin: 80px 10px 40px 10px;
+  @media screen and (min-width: v.$tablet) {
+    margin: 80px 40px 40px 40px;
+  }
 
   & .flex-column {
     gap: 20px;
+    margin: 2rem 0;
   }
 
   label {
@@ -128,17 +130,30 @@ export default class HomeView extends Vue {}
     background-color: transparent;
     padding: 12px 20px;
     border-radius: 5px;
-    width: 70%;
     outline: none;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    width: 90%;
     &::placeholder {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: v.$aLittleTransparent;
     }
     &::-webkit-input-placeholder {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: v.$aLittleTransparent;
+    }
+
+    @media screen and (min-width: v.$tablet) {
+      width: 70%;
+      font-size: 1.1rem;
+      &::placeholder {
+        font-size: 1.1rem;
+        color: v.$aLittleTransparent;
+      }
+      &::-webkit-input-placeholder {
+        font-size: 1.1rem;
+        color: v.$aLittleTransparent;
+      }
     }
   }
   button {

@@ -1,0 +1,57 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+$width: 414px;
+$height: 520px;
+
+.pd-device-borders  {
+  border: 1px solid rgba(black, 0.8);
+  width: $width;
+  height: $height;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px 1px rgba(black, 0.4);
+  background-color: v.$pokedex;
+
+  .screen-borders {
+    background-color: rgb(171,142,100);
+    border: .7px solid black;
+    border-radius: 5px 5px 5px 15px;
+    margin: 25px auto;
+    width: #{$width - 100};
+    height: #{$height/2.5};
+
+    .leds-top {
+      @include m.flex-centered;
+      height: 25px;
+      gap: 15px;
+
+      span {
+        @include m.led-button(7px);
+      }
+    }
+    .screen {
+      @include m.flex-centered;
+      background-color: rgb(42,43,37);
+      width: #{$width - 150};
+      height: #{($height/2.5) - 50};
+      margin: auto;
+      border-radius: 5px;
+      img {
+        width: 150px;
+      }
+    }
+
+    .screen-bottom {
+      @include m.flex-space-between;
+      width: #{$width - 150};
+      margin: 5px 25px;
+
+      span:first-child {
+        @include m.led-button(13px);
+      }
+      svg {
+
+      }
+    }
+  }
+}
